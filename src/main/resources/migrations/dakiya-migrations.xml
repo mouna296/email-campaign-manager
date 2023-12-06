@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <preConditions onFail="HALT">
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <!-- avoid incudeall at all cost, order of execution is crucial-->
+    <include file="dakiya-sql-changesets/00-dakiya-core.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/01-dakiya-mails.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/02-dakiya-campaigns.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/03-dakiya-analytics.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/04-dakiya-campaigns-sendgrid-domain-update.sql"
+             relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/05-dakiya-dynamic-mail.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/06-dakiya-campaign-category.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/07-drop-mail-events-unique-constriants.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/08-drop-unique-index-pk-mail-events.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/09-add-audit-details.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/10-add-more-details-to-campaign-event.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/11-add_chunking_columns_to_campaigns_table.sql"
+             relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/12-update_campaign_events_table.sql" relativeToChangelogFile="true"/>
+    <include file="dakiya-sql-changesets/100-quartz-one-time-setup.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

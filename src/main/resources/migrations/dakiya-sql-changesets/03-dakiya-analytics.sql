@@ -24,7 +24,7 @@ CREATE TABLE dakiya_mails_stats
 CREATE UNIQUE INDEX dakiya_mails_stats_pk_uindex
   ON dakiya_mails_stats (date, recipient);
 
---changeset codebuff:dakiya-analytics-setup02 runAlways=false runInTransaction=true failOnError=true
+--changeset siddhant:dakiya-analytics-setup02 runAlways=false runInTransaction=true failOnError=true
 CREATE TABLE dakiya_campaigns_events
 (
   campaign_id    INTEGER                     NOT NULL,
