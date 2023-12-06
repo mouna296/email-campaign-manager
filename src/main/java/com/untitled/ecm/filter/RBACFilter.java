@@ -1,5 +1,6 @@
 package com.untitled.ecm.filter;
 
+import com.untitled.ecm.auth.RBACSecurityContext;
 import com.untitled.ecm.constants.DakiyaStrings;
 import com.untitled.ecm.constants.Roles;
 import lombok.extern.slf4j.Slf4j;
@@ -30,18 +31,20 @@ public class RBACFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         Method resourceMethod = resourceInfo.getResourceMethod();
+        String email = requestContext.getHeaderString(DakiyaStrings.USER_EMAIL_HEADER);
         String userRole = requestContext.getHeaderString(DakiyaStrings.USER_ROLE_HEADER);
 
         if (!resourceMethod.isAnnotationPresent(RolesAllowed.class)) {
             return;
         }
 
-        if (Objects.isNull(userRole)) {
+        if (Objects.isNull(userRole) || Objects.isNull(email)) {
             setFailureResponse(requestContext);
             return;
         }
 
         if (userRole.equalsIgnoreCase(Roles.SUPER_USER)) {
+            requestContext.setSecurityContext(new RBACSecurityContext(email, userRole, requestContext.getSecurityContext()));
             return;
         }
 
@@ -50,11 +53,11 @@ public class RBACFilter implements ContainerRequestFilter {
 
         for (String role : roles) {
             if (role.equalsIgnoreCase(userRole)) {
+                requestContext.setSecurityContext(new RBACSecurityContext(email, userRole, requestContext.getSecurityContext()));
                 return;
             }
         }
         setFailureResponse(requestContext);
-
     }
 
     private void setFailureResponse(ContainerRequestContext containerRequestContext) {

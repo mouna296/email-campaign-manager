@@ -20,7 +20,7 @@ public class DakiyaUser implements Principal {
 
     @Override
     public String getName() {
-        return this.email;
+        return this.role;
     }
 
     public String getEmail(){

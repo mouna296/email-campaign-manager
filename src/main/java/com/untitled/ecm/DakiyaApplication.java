@@ -10,6 +10,7 @@ import com.untitled.ecm.dao.*;
 import com.untitled.ecm.dao.external.RedshiftDao;
 import com.untitled.ecm.dao.mappers.IllegalArgumentExceptionMapper;
 import com.untitled.ecm.exceptionmappers.*;
+import com.untitled.ecm.filter.RBACFilter;
 import com.untitled.ecm.health.BackGroundTaskManagerHealthCheck;
 import com.untitled.ecm.health.SchedulerHealthCheck;
 import com.untitled.ecm.resources.*;
@@ -265,7 +266,7 @@ public class DakiyaApplication extends Application<DakiyaConfiguration> {
 
     private void setupAuthentication() {
 
-//        jerseyEnvironment.register(new RBACFilter());
+        jerseyEnvironment.register(new RBACFilter());
 //        jerseyEnvironment.register(new AuthDynamicFeature(
 //                new BasicCredentialAuthFilter.Builder<DakiyaUser>()
 //                        .setAuthenticator(new DakiyaAuthenticator(dakiyaUserDAO))

@@ -81,7 +81,7 @@ public class CampaignResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Campaign createCampaign(@Context HttpServletRequest request, @Context SecurityContext securityContext) {
 
-        DakiyaUser dakiyaUser = new DakiyaUser("siddhantnagpal03@gmail.com", Roles.CAMPAIGN_MANAGER);
+        DakiyaUser dakiyaUser = (DakiyaUser) securityContext.getUserPrincipal();
 
         JSONObject newCampaignJsonObject = this.validateAndGetCampaignJson(request);
 
@@ -164,7 +164,9 @@ public class CampaignResource {
 
         SchedulerUtils.unscheduleCampaign((campaign.getId()));
 
-        if (!campaignService.archiveCampaign(campaign, (DakiyaUser) securityContext.getUserPrincipal())) {
+        DakiyaUser dakiyaUser = (DakiyaUser) securityContext.getUserPrincipal();
+
+        if (!campaignService.archiveCampaign(campaign, dakiyaUser)) {
             throw new InternalServerErrorException("internal db error, could not copy campaign to archives");
         }
 
@@ -183,7 +185,8 @@ public class CampaignResource {
     @GET
     @Path("{campaign-id}/analytics/success-failure-breakdown")
     @RolesAllowed({Roles.CAMPAIGN_MANAGER, Roles.CAMPAIGN_SUPERVISOR})
-    public SuccessFailureBreakdown getSuccessFailureBreakdown(@PathParam("campaign-id") int id) {
+    public SuccessFailureBreakdown getSuccessFailureBreakdown(@Context SecurityContext context, @PathParam("campaign-id") int id) {
+        DakiyaUser dakiyaUser = (DakiyaUser) context.getUserPrincipal();
         return campaignService.getSuccessFailureBreakdown(id);
     }
 

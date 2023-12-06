@@ -56,6 +56,7 @@ public final class DakiyaStrings {
     public static final int MIN_PASS_LENGHT = 10;
 
     public static String USER_ROLE_HEADER = "X-User-Role";
+    public static String USER_EMAIL_HEADER = "X-User-Email";
 
     private DakiyaStrings() {
 
