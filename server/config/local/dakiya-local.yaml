@@ -1,0 +1,173 @@
+instance-type: "local"
+
+# whether we want to start afresh and reset all the settings to default
+# if yes then following settings will be overwritten or created in db
+# on very first run of dakiya, one might prefer to turn it to on
+reset-dakiya-runtime-settings: yes
+# these settings can and may be changed while dakiya is running, thus will be saved in db as strings
+dakiya-runtime-settings:
+# yes/no/true/false/admin-only/supervisor-only etc
+# note jackson converts yes to true and no to false
+  creating-campaigns-allowed: yes # yes/no, true/false
+  sending-emails-allowed: yes #yes/no, true/false
+  max-emails-allowed-per-recipient-per-day: 100
+  # format to add more damain key
+  # sendgrid-apikey-d-{domian}
+  sendgrid-apikey-d-default: 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
+  sendgrid-apikey-d-gmail.com: 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
+
+
+# range 1-50
+max-dakiya-background-tasks: 10
+
+dakiya-datasource:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: dakiya
+
+  # the password
+  password: dakiya
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost:5432/dakiya_local_db
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* Dakiya DB Health Check */ SELECT 1"
+
+  # the timeout before a connection validation queries fail
+  validationQueryTimeout: 3s
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+  defaultTransactionIsolation: READ_COMMITTED
+  checkConnectionOnBorrow: true
+  checkConnectionOnConnect: true
+  # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
+  evictionInterval: 10s
+
+  # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
+  minIdleTime: 1 minute
+
+
+redshift-datasource:
+# todo , change these
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: siddhant
+
+  # the password
+  password:
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost:5432/metabase
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* Metabase Health Check */ SELECT 1"
+
+  # the timeout before a connection validation queries fail
+  validationQueryTimeout: 3s
+
+  # the minimum number of connections to keep open
+  minSize: 1
+
+  initialSize: 1
+
+  # the maximum number of connections to keep open
+  maxSize: 2
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+  defaultTransactionIsolation: READ_COMMITTED
+  checkConnectionOnBorrow: true
+  checkConnectionOnConnect: true
+  # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
+  evictionInterval: 10s
+
+  # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
+  minIdleTime: 1 minute
+
+  readOnlyByDefault: true
+
+
+
+quartz-properties:
+  org.quartz.scheduler.instanceName: dakiyaScheduler
+  org.quartz.scheduler.instanceId: 99199
+  org.quartz.scheduler.rmi.export: false
+  org.quartz.scheduler.rmi.proxy: false
+  org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool
+  # only one job at a time. todo review this
+  org.quartz.threadPool.threadCount: 1
+  quartz.threadPool.threadPriority: Normal
+  org.quartz.context.key.QuartzTopic: QuartzPorperties
+  # if no persistance needed for jobs
+  #org.quartz.jobStore.class=org.quartz.simpl.RAMJobStore
+  # persisting jobs in db
+  org.quartz.jobStore.class: org.quartz.impl.jdbcjobstore.JobStoreTX
+  org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+  org.quartz.jobStore.tablePrefix: QRTZ_
+  org.quartz.jobStore.dataSource: quartzDS
+  #org.quartz.jobListener.NAME.class: todo review this setting
+  org.quartz.dataSource.quartzDS.driver: org.postgresql.Driver
+  org.quartz.dataSource.quartzDS.URL: jdbc:postgresql://localhost:5432/dakiya_local_db
+  org.quartz.dataSource.quartzDS.user: dakiya
+  org.quartz.dataSource.quartzDS.password: dakiya
+  org.quartz.dataSource.quartzDS.maxConnections: 30
+  # triggerhistory logging
+  org.quartz.plugin.triggerHistory.class: org.quartz.plugins.history.LoggingTriggerHistoryPlugin
+  org.quartz.plugin.triggerHistory.triggerFiredMessage: "Trigger [{1}.{0}] fired job [{6}.{5}] scheduled at: {2, date, dd-MM-yyyy HH:mm:ss.SSS}, next scheduled at: {3, date, dd-MM-yyyy HH:mm:ss.SSS}"
+  org.quartz.plugin.triggerHistory.triggerCompleteMessage: "Trigger [{1}.{0}] completed firing job [{6}.{5}] with resulting trigger instruction code: {9}. Next scheduled at: {3, date, dd-MM-yyyy HH:mm:ss.SSS}"
+  org.quartz.plugin.triggerHistory.triggerMisfiredMessage: "Trigger [{1}.{0}] misfired job [{6}.{5}]. Should have fired at: {3, date, dd-MM-yyyy HH:mm:ss.SSS}"
+  # jobhistory logging
+  org.quartz.plugin.jobHistory.class: org.quartz.plugins.history.LoggingJobHistoryPlugin
+  org.quartz.plugin.jobHistory.jobToBeFiredMessage: "Job [{1}.{0}] to be fired by trigger [{4}.{3}], re-fire: {7}"
+  org.quartz.plugin.jobHistory.jobSuccessMessage: "Job [{1}.{0}] execution complete and reports: {8}"
+  org.quartz.plugin.jobHistory.jobFailedMessage: "Job [{1}.{0}] execution failed with exception: {8}"
+  org.quartz.plugin.jobHistory.jobWasVetoedMessage: "Job [{1}.{0}] was vetoed. It was to be fired by trigger [{4}.{3}] at: {2, date, dd-MM-yyyy HH:mm:ss.SSS}"
+
+
+logging:
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE.
+  level: INFO
+  loggers:
+    "com.untitled.ecm.dao": DEBUG
+
+
+# server settings
+server:
+  type: default
+  allowedMethods: [GET, POST, OPTIONS]
+  applicationContextPath: /
+  adminContextPath: /try
+
+  applicationConnectors:
+    - type: http
+      port: 9876
+      bindHost: 127.0.0.1
+  adminConnectors:
+    - type: http
+      port: 8416
+      bindHost: 127.0.0.1

@@ -1,0 +1,56 @@
+
+<div class="page-header login-page navbar-transparent" filter-color="">
+    <!-- Set the background image here. If you want it to be white, you can remove the style attribute.background-image:url('path_to_your_image.jpg') -->
+    <div class="page-header-image" style="background-color:rgb(46, 46, 46); background-size: cover; background-position: center center;"></div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="col-md-4">
+                <div class="card card-login card-plain">
+                    <form class="form">
+                        <div class="header header-primary text-center">
+                            <div class="logo-container">
+                                <!-- Set the source of your logo here -->
+                                <img src="path_to_your_logo.png" alt="">
+                                <h3> Sign UP</h3>
+                            </div>
+                        </div>
+                        <div class="content">
+                        <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">  <i class="now-ui-icons users_circle-08"></i></span>
+                            </div>
+                              <input [(ngModel)]=firstName type="text" class="form-control" placeholder="First Name" (focus)="focus=true" (blur)="focus=false" >
+                          </div>
+                          <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">  <i class="now-ui-icons users_circle-08"></i></span>
+                            </div>
+                              <input [(ngModel)]=lastName type="text" class="form-control" placeholder="LastName" (focus)="focus=true" (blur)="focus=false" >
+                          </div>
+                          
+                      <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">  <i class="now-ui-icons ui-1_email-85"></i></span>
+                        </div>
+                          <input [(ngModel)]=email type="text" class="form-control" placeholder="Email" (focus)="focus=true" (blur)="focus=false" >
+                      </div>
+                      <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="now-ui-icons objects_key-25"></i></span>
+                        </div>
+                          <input [(ngModel)]=pass type="password" placeholder="Password" class="form-control" (focus)="focus1=true" (blur)="focus1=false"/>
+                      </div>
+                    </div>
+                    <p class="error" *ngIf="error">{{error}}</p>
+                    <div class="footer text-center">
+                        <button (click)="signup()" class="btn btn-primary btn-round btn-lg btn-block">Login</button>
+                    </div>
+                </form>
+                <h6>
+                    <a class="nav-link" href="/signup">Create Account</a>
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

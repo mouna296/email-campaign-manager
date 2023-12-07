@@ -1,0 +1,86 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" style="height: 800px;">
+        <div class="card-header">
+          <h4 class="card-title"> Campaigns</h4>
+          <button *ngIf="!isCampaignSupervisor()" class="btn btn-primary" style="float: right;" [disabled]="isCampaignSupervisor()" (click)="navigateToCreateCampaign()">Create Campaign</button>
+        </div>
+        <div class="card-body" >
+          <div class="table-responsive">
+            <table class="table"style="height: 600px;" >
+              <thead class="text-primary">
+                <th>Actions</th>
+                <th>Title</th>
+                <th>About</th>
+                <th>Approval Status</th>
+                <th>Start At</th>
+                <th>End At</th>
+                <th>Subject</th>
+                <th> SQL </th>
+                <th *ngIf="!isCampaignSupervisor()"> Scheduled </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let campaign of campaigns">
+                  <td>
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{campaign.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{campaign.id}}">
+                        <a *ngIf="!isCampaignSupervisor()" class="dropdown-item"  href="#" [class.disabled]="campaign.scheduled === 1" (click)="campaign.scheduled !== 1 && executeCampaignNow(campaign); $event.preventDefault()"> Execute Now </a>
+
+                        <a *ngIf="!isCampaignSupervisor()" class="dropdown-item" href="#" (click)="archiveCampaign(campaign); $event.preventDefault()">Archive</a>
+                        <a class="dropdown-item" href="#" [class.disabled]="campaign.state === 'approved'"  (click)="campaign.state !== 'approved' && approveCampaign(campaign); $event.preventDefault()">Approve</a>
+                        <a class="dropdown-item" href="#" (click)="goToCampaignAnalytics(campaign.id); $event.preventDefault()">Analytics</a>
+
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ campaign.title }}</td>
+                  <td>{{ campaign.about }}</td>
+                  <td>
+                    <span *ngIf="campaign.state === 'approved'">Approved</span>
+                    <span *ngIf="campaign.state === 'not_approved'">Not Approved</span>
+                  </td>                  
+                  <td>{{ campaign.startAt | date: 'MM-dd-yyyy HH:mm' }}</td>
+                  <td>{{ campaign.endAt | date: 'MM-dd-yyyy HH:mm' }}</td>
+                  <td>{{ campaign.mail.subject }}</td>
+                  <td>{{ campaign.sql }}</td>
+                
+                  <td class="text-right">
+                    <label *ngIf="!isCampaignSupervisor()" class="switch">
+                        <input type="checkbox" 
+                               [checked]="campaign.scheduled === 1" 
+                               [unchecked]="campaign.scheduled === 0"
+                               (change)="publishCampaign($event, campaign)" />
+                        <span class="slider round"></span>
+                    </label>
+                </td>
+                
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" href="#" (click)="onPageChange(currentPage - 1)">Previous</a>
+        </li>
+        <li class="page-item" [class.active]="currentPage === page" *ngFor="let page of [].constructor(Math.ceil(totalCampaigns / pageSize))">
+          <a class="page-link" href="#" (click)="onPageChange(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === Math.ceil(totalCampaigns / pageSize)">
+          <a class="page-link" href="#" (click)="onPageChange(currentPage + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

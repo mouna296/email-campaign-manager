@@ -1,0 +1,12 @@
+.nav li a {
+    transition: color 0.3s; /* Smooth color transition */
+  }
+  
+  /* Change text color on hover */
+  .nav li a:hover {
+    color: red; /* Or any color you prefer */
+  }
+
+  .nav li a:hover p {
+    color: red;
+  }

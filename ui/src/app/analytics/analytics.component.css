@@ -1,0 +1,32 @@
+.container {
+    text-align: center;
+  }
+  
+  .card {
+    margin: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+  }
+  
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  .page-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* This centers the content vertically */
+    height: 100vh; /* This ensures that the container takes at least the height of the viewport */
+    text-align: center; /* This centers the text horizontally */
+}
+
+  .campaign-header {
+    font-size: 50px; /* Reduce the font size */
+    font-family: 'Arial', sans-serif; /* Change to a different font */
+    margin-bottom: 2rem; /* Increase bottom margin to lower the heading */
+}
+
+.chart-card {
+    margin-top: 1rem; /* This will lower your cards a bit */
+}

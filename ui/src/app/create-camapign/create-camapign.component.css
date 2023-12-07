@@ -1,0 +1,11 @@
+.page-center {
+    position: relative; /* This makes sure that the negative margin is relative to the position */
+    margin-top: -50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* This centers the content vertically */
+    height: 100vh; /* This ensures that the container takes at least the height of the viewport */
+    text-align: center; /* This centers the text horizontally */
+}
+
+
