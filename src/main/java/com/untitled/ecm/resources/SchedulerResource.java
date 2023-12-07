@@ -28,6 +28,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class SchedulerResource {
     private final CampaignService campaignService;
+    private final CampaignDAO campaignDAO;
 
     public SchedulerResource(final CampaignDAO campaignDAO,
                              final DakDAO dakDAO,
@@ -36,6 +37,7 @@ public class SchedulerResource {
         if (campaignDAO == null) {
             throw new InstantiationError("null value provided");
         }
+        this.campaignDAO = campaignDAO;
         this.campaignService = new CampaignService(campaignDAO,
                 new MailService(dakDAO, dakiyaRuntimeSettings),
                 dakiyaInstanceType);
@@ -96,6 +98,9 @@ public class SchedulerResource {
     @RolesAllowed(Roles.CAMPAIGN_MANAGER)
     public Message unscheduleCampaign(@PathParam("campaign-id") int id) throws SchedulerException {
 
+        Campaign campaign = campaignService.getCampaignById(id);
+        campaignDAO.updateCampaignScheduled(0, campaign.getId());
+
         SchedulerUtils.unscheduleCampaign(id);
 
         return new Message(id + " unscheduled ");
@@ -122,6 +127,7 @@ public class SchedulerResource {
         Campaign campaign;
         DakiyaUser dakiyaUser = (DakiyaUser) securityContext.getUserPrincipal();
         campaign = campaignService.getCampaignById(id);
+        campaignDAO.updateCampaignScheduled(1, campaign.getId());
 
         if (campaign == null) {
             throw new NotFoundException("no such campaign exist");

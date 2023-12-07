@@ -209,8 +209,8 @@ public class SchedulerResourceTest extends CampaignCommons {
 
         final TestCampaignScheduleModel model = TestCampaignScheduleModel
                 .builder()
-                .startAt(DateTime.now().plusSeconds(secondsDelay).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)))
-                .endAt(DateTime.now().plusYears(20).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)))
+                .startAt(DateTime.now().plusSeconds(secondsDelay).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)))
+                .endAt(DateTime.now().plusYears(20).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)))
                 .repeatPeriod(Duration.standardHours(3).toPeriod())
                 // this campaign should execute upto one time only
                 .repeatThreshold(0)

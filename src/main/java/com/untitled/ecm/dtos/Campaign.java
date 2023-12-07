@@ -41,6 +41,7 @@ public class Campaign {
     private Integer chunkCount;
     private Integer mailsPerChunk;
     private Integer delayPerChunkInMinutes;
+    private Integer scheduled;
 
     public String getCreatedOn() {
         return this.createdOn.toString();
@@ -48,7 +49,7 @@ public class Campaign {
 
     public void setCreatedOn(Timestamp createdOnTimeStamp) {
         this.createdOn = new DateTime(createdOnTimeStamp)
-                .withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+                .withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
     }
 
 
@@ -59,7 +60,7 @@ public class Campaign {
 
     public void setLastModifiedTime(Timestamp lastModifiedTimeTimetamp) {
         this.lastModifiedTime = new DateTime(lastModifiedTimeTimetamp)
-                .withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+                .withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
     }
 
     public String getStartAt() {
@@ -68,7 +69,7 @@ public class Campaign {
 
     public void setStartAt(Timestamp startAtTimestamp) {
         this.startAt = new DateTime(startAtTimestamp)
-                .withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+                .withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
     }
 
     public String getEndAt() {
@@ -77,7 +78,7 @@ public class Campaign {
 
     public void setEndAt(Timestamp endAtTimestamp) {
         this.endAt = new DateTime(endAtTimestamp)
-                .withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+                .withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
     }
 
     public long getEndAtMillis() {
@@ -93,7 +94,7 @@ public class Campaign {
     }
 
     public long getRepeatPeriodMillis() {
-        Duration duration = this.repeatPeriod.toDurationFrom(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)));
+        Duration duration = this.repeatPeriod.toDurationFrom(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)));
         return duration.getMillis();
     }
 
@@ -110,7 +111,7 @@ public class Campaign {
             return;
         }
         this.approvedAt = new DateTime(approvedAt)
-                .withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+                .withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
     }
 
 }

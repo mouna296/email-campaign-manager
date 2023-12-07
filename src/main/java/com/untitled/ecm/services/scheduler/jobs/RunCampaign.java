@@ -47,7 +47,7 @@ public class RunCampaign implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        triggerDateTime = DateTime.now(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+        triggerDateTime = DateTime.now(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
         triggerTimeStamp = new Timestamp(triggerDateTime.getMillis());
         mailEvents = new ArrayList<>();
         initializeDB();

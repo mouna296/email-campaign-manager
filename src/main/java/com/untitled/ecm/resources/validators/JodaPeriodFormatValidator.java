@@ -22,7 +22,7 @@ public class JodaPeriodFormatValidator implements FormatValidator {
 
         // currently all campaigns must execute maximum once per 24 hours.
         Period period = Period.parse(periodString);
-        Duration duration = period.toDurationFrom(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)));
+        Duration duration = period.toDurationFrom(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)));
         if (duration.getStandardMinutes() < 30) {
             return Optional.of("Provide a value of repeat_period which is greater than 30 minutes");
         } else {

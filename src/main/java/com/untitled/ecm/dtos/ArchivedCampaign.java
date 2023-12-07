@@ -65,7 +65,7 @@ public class ArchivedCampaign {
         this.approved_by = campaign.getApprovedBy();
         this.approved_at = campaign.getApprovedAt() == null ? null : new Timestamp(DateTime.parse(campaign.getLastModifiedTime()).getMillis());
         this.archived_by = dakiyaUser.getEmail();
-        this.archived_at = new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)).getMillis());
+        this.archived_at = new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)).getMillis());
         this.dakiya_instance_type = campaign.getDakiyaInstanceType();
         this.chunk_count = campaign.getChunkCount();
         this.mails_per_chunk = campaign.getMailsPerChunk();

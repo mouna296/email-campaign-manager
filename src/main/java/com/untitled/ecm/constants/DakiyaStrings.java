@@ -6,7 +6,7 @@ public final class DakiyaStrings {
     public static final String SENDGRID = "sendgrid";
 
     // assuming most of email recipients are in India, however in db everything is in unix timestamp
-    public static final String DAKIYA_TIMEZONE_INDIA = "Asia/Kolkata";
+    public static final String TIMEZONE_LA = "America/Los_Angeles";
 
 
     //mailer

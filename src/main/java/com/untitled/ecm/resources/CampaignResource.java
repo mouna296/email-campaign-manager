@@ -56,7 +56,7 @@ public class CampaignResource {
 
 
     @GET
-    @RolesAllowed(Roles.CAMPAIGN_SUPERVISOR)
+    @RolesAllowed({Roles.CAMPAIGN_MANAGER, Roles.CAMPAIGN_SUPERVISOR})
     public List<Campaign> findAll(@Context SecurityContext securityContext) {
         return campaignService.getAllCampaigns();
     }
@@ -77,7 +77,7 @@ public class CampaignResource {
 
 
     @POST
-    @RolesAllowed({Roles.CAMPAIGN_SUPERVISOR, Roles.SUPER_USER})
+    @RolesAllowed({Roles.CAMPAIGN_SUPERVISOR, Roles.CAMPAIGN_MANAGER})
     @Consumes(MediaType.APPLICATION_JSON)
     public Campaign createCampaign(@Context HttpServletRequest request, @Context SecurityContext securityContext) {
 

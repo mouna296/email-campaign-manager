@@ -115,8 +115,8 @@ public class CampaignCommons extends ResourceTestBase {
     protected TestCampaignScheduleModel getTestCampaignDefaultSchedule() {
         return TestCampaignScheduleModel
                 .builder()
-                .startAt(DateTime.now().plusYears(10).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)))
-                .endAt(DateTime.now().plusYears(20).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)))
+                .startAt(DateTime.now().plusYears(10).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)))
+                .endAt(DateTime.now().plusYears(20).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)))
                 .repeatPeriod(Duration.standardDays(3).toPeriod())
                 .repeatThreshold(0)
                 .mailLimit(2)

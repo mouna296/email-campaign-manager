@@ -45,11 +45,11 @@ public interface CampaignDAO {
             "(sql, version, about, title, created_on, state, mail_dbid, " +
             "campaign_creator, last_modified_time, last_modified_by, " +
             "start_at, end_at, repeat_period, repeat_threshold, mail_limit, " +
-            "sendgrid_domain, category, dakiya_instance_type, chunk_count, mails_per_chunk, delay_per_chunk_in_minutes) " +
+            "sendgrid_domain, category, dakiya_instance_type, chunk_count, mails_per_chunk, delay_per_chunk_in_minutes, scheduled) " +
             "Values (:sql, :version, :about, :title, :created_on, :state, :mail_dbid, " +
             ":campaign_creator, :last_modified_time, :last_modified_by, " +
             ":start_at, :end_at, :repeat_period, :repeat_threshold, :mail_limit, " +
-            ":sendgrid_domain, :category, :dakiya_instance_type, :chunk_count, :mails_per_chunk, :delay_per_chunk_in_minutes) " +
+            ":sendgrid_domain, :category, :dakiya_instance_type, :chunk_count, :mails_per_chunk, :delay_per_chunk_in_minutes, :scheduled) " +
             "RETURNING id;")
     int saveCampaign(@Bind("sql") String sql,
                      @Bind("version") int version,
@@ -71,7 +71,8 @@ public interface CampaignDAO {
                      @Bind("dakiya_instance_type") String dakiyaInstanceType,
                      @Bind("chunk_count") Integer chunkCount,
                      @Bind("mails_per_chunk") Integer mailsPerChunk,
-                     @Bind("delay_per_chunk_in_minutes") Integer delayPerChunkInMinutes);
+                     @Bind("delay_per_chunk_in_minutes") Integer delayPerChunkInMinutes,
+                     @Bind("scheduled") Integer scheduled);
 
     @SqlUpdate("INSERT INTO dakiya_campaigns_archives" +
             "(id, sql, version, about, title, created_on, state, mail_dbid, " +
@@ -162,6 +163,9 @@ public interface CampaignDAO {
             "WHERE\n" +
             "  campaign_id = :campaignId;")
     SuccessFailureBreakdown getSuccessFailureBreakdown(@Bind("campaignId") int campaignId);
+
+    @SqlUpdate("UPDATE dakiya_campaigns set scheduled = :scheduled where id = :campaignId;")
+    int updateCampaignScheduled(@Bind("scheduled") int scheduled, @Bind("campaignId") int campaignId);
 
     void close();
 

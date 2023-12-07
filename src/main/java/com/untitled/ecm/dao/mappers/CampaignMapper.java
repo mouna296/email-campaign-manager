@@ -35,6 +35,7 @@ public class CampaignMapper implements ResultSetMapper<Campaign> {
         campaign.setChunkCount(r.getInt("chunk_count"));
         campaign.setMailsPerChunk(r.getInt("mails_per_chunk"));
         campaign.setDelayPerChunkInMinutes(r.getInt("delay_per_chunk_in_minutes"));
+        campaign.setScheduled(r.getInt("scheduled"));
         return campaign;
     }
 }

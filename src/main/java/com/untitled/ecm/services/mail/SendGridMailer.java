@@ -157,7 +157,7 @@ public class SendGridMailer extends Mailer {
         // pass it to runnable so that it can update campaign event in db when task is finished
         campaignEvent.setMails_sent(0);
         campaignEvent.setRemark("Attempting to start sending mails now at : "
-                + DateTime.now(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)).toString());
+                + DateTime.now(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)).toString());
         SendGridAPICaller sendGridAPICaller = new SendGridAPICaller(sendGrid, mailsYetToBeSend, getErrors(), logDAO, campaignEvent);
 
 
@@ -182,7 +182,7 @@ public class SendGridMailer extends Mailer {
         campaignEvent.setExpected_mails(-1);
         campaignEvent.setMails_filtered(-1);
         campaignEvent.setMails_sent(-1);
-        campaignEvent.setTrigger_time(new Timestamp(DateTime.now(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)).getMillis()));
+        campaignEvent.setTrigger_time(new Timestamp(DateTime.now(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)).getMillis()));
         campaignEvent.setVersion(-1);
         campaignEvent.setRemark("This event is not for a campaign");
         return campaignEvent;

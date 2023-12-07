@@ -97,11 +97,11 @@ public class DakiyaUtils {
     }
 
     public static DateTime getISTDateTime(final Date date) {
-        return new DateTime(date).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+        return new DateTime(date).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
     }
     public static DateTime getStartDateTime(String ISO86041_StartAt) {
-        DateTime startDateTime = DateTime.parse(ISO86041_StartAt).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
-        DateTime currentDateTime = DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+        DateTime startDateTime = DateTime.parse(ISO86041_StartAt).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
+        DateTime currentDateTime = DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
         if (startDateTime.isAfter(currentDateTime)) {
             return startDateTime;
         } else {

@@ -15,7 +15,7 @@ public class TimeDiffValidator {
 
     public TimeDiffValidator(String ISO86041_startAt, String ISO86041_endAt, String ISO86041_period) {
         this.startAt = DakiyaUtils.getStartDateTime(ISO86041_startAt);
-        this.endAT = DateTime.parse(ISO86041_endAt).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+        this.endAT = DateTime.parse(ISO86041_endAt).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
         this.period = Period.parse(ISO86041_period);
     }
 

@@ -62,7 +62,7 @@ public class ResourceTestBase {
 
         client = ClientBuilder.newClient();
         JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-        provider.setMapper(new JodaMapper().setTimeZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA).toTimeZone()));
+        provider.setMapper(new JodaMapper().setTimeZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA).toTimeZone()));
         client.register(provider);
 
         DBI dakiyaDBI = DakiyaDBFactory.getDakiyaDB();

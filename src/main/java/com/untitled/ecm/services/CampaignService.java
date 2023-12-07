@@ -142,7 +142,7 @@ public class CampaignService {
         try {
             int rowsModified = campaignDAO.changeCampaignStateToApproved(id,
                     dakiyaUser.getEmail(),
-                    new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)).getMillis()));
+                    new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)).getMillis()));
             if (rowsModified != 1) {
                 log.error("expected rows modified 1, found " + Integer.toString(rowsModified));
                 throw new InternalServerErrorException("internal db error, unexpected number of rows modified");
@@ -216,14 +216,14 @@ public class CampaignService {
         int version = 0;
         String title = campaign.getString("title");
         String about = campaign.getString("about");
-        Timestamp createdOn = new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)).getMillis());
+        Timestamp createdOn = new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)).getMillis());
         String state = CampaignStates.NOT_APPROVED;
         String campaignCreator = dakiyaUser.getEmail();
         Timestamp lastModifiedTime = createdOn;
         String lastModifiedBy = dakiyaUser.getEmail();
         DateTime startDateTime = DakiyaUtils.getStartDateTime(campaign.getString("start_at"));
         Timestamp startAt = new Timestamp(startDateTime.getMillis());
-        DateTime endDateTime = DateTime.parse(campaign.getString("end_at")).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+        DateTime endDateTime = DateTime.parse(campaign.getString("end_at")).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
         Timestamp endAt = new Timestamp(endDateTime.getMillis());
         String repeatPeriod = campaign.getString("repeat_period");
         String sendgridDomain = campaign.getString("sendgrid_domain");
@@ -240,7 +240,7 @@ public class CampaignService {
             return campaignDAO.saveCampaign(sql, version, title, about, createdOn, state, mailIDinDB,
                     campaignCreator, lastModifiedTime, lastModifiedBy, startAt, endAt, repeatPeriod,
                     repeatThreshold, perUserMailLimit, sendgridDomain, category, dakiyaInstanceType,
-                    chunkCount, mailsPerChunk, delayPerChunkInMinutes);
+                    chunkCount, mailsPerChunk, delayPerChunkInMinutes, 0);
         } catch (Exception e) {
             log.error(e.getMessage());
             return -1;
@@ -256,11 +256,11 @@ public class CampaignService {
         Timestamp createdOn = new Timestamp(DateTime.parse(oldCampaign.getCreatedOn()).getMillis());
         String state = CampaignStates.NOT_APPROVED;
         String campaignCreator = oldCampaign.getCampaignCreator();
-        Timestamp lastModifiedTime = new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA)).getMillis());
+        Timestamp lastModifiedTime = new Timestamp(DateTime.now().withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA)).getMillis());
         String lastModifiedBy = dakiyaUser.getEmail();
         DateTime startDateTime = DakiyaUtils.getStartDateTime(newCampaign.getString("start_at"));
         Timestamp startAt = new Timestamp(startDateTime.getMillis());
-        DateTime endDateTime = DateTime.parse(newCampaign.getString("end_at")).withZone(DateTimeZone.forID(DakiyaStrings.DAKIYA_TIMEZONE_INDIA));
+        DateTime endDateTime = DateTime.parse(newCampaign.getString("end_at")).withZone(DateTimeZone.forID(DakiyaStrings.TIMEZONE_LA));
         Timestamp endAt = new Timestamp(endDateTime.getMillis());
         String repeatPeriod = newCampaign.getString("repeat_period");
         String sendgridDomain = newCampaign.getString("sendgrid_domain");
